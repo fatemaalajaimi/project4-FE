@@ -1,33 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Route, Routes } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import { BASE_URL } from './globals'
+import axios from 'axios'
+import Nav from './components/NavBar'
+import Home from './pages/Home'
+import Signin from './pages/auth/Signin'
+import Signup from './pages/auth/Signup'
+import { useEffect, useState } from 'react'
+import { getProfile } from './services/userService'
+import client from './services/config'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [user, setUser] = useState(null)
+
+  const getUserProfile = async () => {
+    try {
+      const data = await getProfile()
+      console.log(data)
+      setUser(data)
+    } catch (error) {
+      setUser(null)
+      console.log(error)
+    }
+  }
+
+  const logOut = () => {
+    localStorage.removeItem('authToken')
+    setUser(null)
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <Nav logOut={logOut} user={user} />
+      </header>
+      <main>
+        <Routes>
+          <Route
+            path="/auth/signup"
+            element={<Signup getUserProfile={getUserProfile} />}
+          />
+          <Route
+            path="/auth/signin"
+            element={<Signin getUserProfile={getUserProfile} />}
+          />
+
+          <Route path="/" element={<Home user={user} />} />
+        </Routes>
+      </main>
     </>
   )
 }

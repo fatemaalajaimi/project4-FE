@@ -7,6 +7,7 @@ import Nav from './components/NavBar'
 import Home from './pages/Home'
 import Signin from './pages/auth/Signin'
 import Signup from './pages/auth/Signup'
+import AddPost from './pages/Post/AddPost'
 import { useEffect, useState } from 'react'
 import { getProfile } from './services/userService'
 import client from './services/config'
@@ -30,6 +31,17 @@ const App = () => {
     setUser(null)
   }
 
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    const getAllPosts = async () => {
+      const response = await axios.get(`${BASE_URL}/post`)
+      setPosts(response.data)
+      console.log(response.data)
+    }
+    getAllPosts()
+  }, [])
+
   return (
     <>
       <header>
@@ -46,7 +58,12 @@ const App = () => {
             element={<Signin getUserProfile={getUserProfile} />}
           />
 
-          <Route path="/" element={<Home user={user} />} />
+          <Route path="/" element={<Home user={user} posts={posts} />} />
+
+          <Route
+            path="/post/new"
+            element={<AddPost posts={posts} setPosts={setPosts} />}
+          />
         </Routes>
       </main>
     </>

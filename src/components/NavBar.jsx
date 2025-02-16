@@ -1,15 +1,18 @@
 import { NavLink } from 'react-router-dom'
 
 const NavBar = ({ logOut, user }) => {
-  const activeLinkStyle = { color: '#800000', fontWeight: 'bold' }
+  const activeLinkStyle = { color: '#0A66C2', fontWeight: 'bold' }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav
+      className="navbar navbar-expand-lg navbar-light shadow-sm"
+      style={{ backgroundColor: '#FFFFFF' }}
+    >
       <div className="container-fluid">
         <NavLink
           className="navbar-brand"
           to="/"
-          style={{ color: '#800000', fontWeight: 'bold' }}
+          style={{ color: '#0A66C2', fontWeight: 'bold', fontSize: '1.5rem' }}
         >
           Job Portal
         </NavLink>
@@ -43,6 +46,28 @@ const NavBar = ({ logOut, user }) => {
                 <li className="nav-item">
                   <NavLink
                     className="nav-link"
+                    to="/profile"
+                    style={({ isActive }) =>
+                      isActive ? activeLinkStyle : undefined
+                    }
+                  >
+                    Profile
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/jobs"
+                    style={({ isActive }) =>
+                      isActive ? activeLinkStyle : undefined
+                    }
+                  >
+                    Jobs
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
                     to="/"
                     onClick={logOut}
                     style={({ isActive }) =>
@@ -63,7 +88,7 @@ const NavBar = ({ logOut, user }) => {
                       isActive ? activeLinkStyle : undefined
                     }
                   >
-                    Signin
+                    Sign In
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -74,7 +99,7 @@ const NavBar = ({ logOut, user }) => {
                       isActive ? activeLinkStyle : undefined
                     }
                   >
-                    Signup
+                    Sign Up
                   </NavLink>
                 </li>
               </>

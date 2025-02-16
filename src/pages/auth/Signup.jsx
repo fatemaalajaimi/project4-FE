@@ -6,7 +6,8 @@ const initialFormData = {
   username: '',
   password: '',
   passwordConf: '',
-  accountType: 'personal'
+  accountType: 'personal',
+  about: ''
 }
 
 const Signup = ({ getUserProfile }) => {
@@ -35,101 +36,131 @@ const Signup = ({ getUserProfile }) => {
     return !(
       formData.username &&
       formData.password &&
+      formData.about &&
       formData.password === formData.passwordConf
     )
   }
 
   return (
-    <main className="container mt-5">
-      <h1 className="text-center mb-4">Sign Up</h1>
-      {message && <p className="text-danger text-center">{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Username:
-          </label>
-          <input
-            type="text"
-            id="username"
-            value={formData.username}
-            name="username"
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password:
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={formData.password}
-            name="password"
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="confirm" className="form-label">
-            Confirm Password:
-          </label>
-          <input
-            type="password"
-            id="confirm"
-            value={formData.passwordConf}
-            name="passwordConf"
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-
-        {/* Account Type Radio Buttons */}
-        <div className="mb-3">
-          <label className="form-label">Account Type:</label>
-          <br />
-          <div>
-            <input
-              type="radio"
-              id="personal"
-              name="accountType"
-              value="personal"
-              checked={formData.accountType === 'personal'}
-              onChange={handleChange}
-            />
-            <label htmlFor="personal" className="ms-2">
-              Personal
+    <main
+      className="container d-flex justify-content-center align-items-center"
+      style={{ height: '100vh' }}
+    >
+      <div
+        className="card shadow-lg p-4"
+        style={{ maxWidth: '400px', width: '100%', borderRadius: '10px' }}
+      >
+        <h2 className="text-center mb-4" style={{ color: '#0A66C2' }}>
+          Sign Up
+        </h2>
+        {message && <p className="text-danger text-center">{message}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label fw-semibold">
+              Username
             </label>
-          </div>
-          <div>
             <input
-              type="radio"
-              id="company"
-              name="accountType"
-              value="company"
-              checked={formData.accountType === 'company'}
+              type="text"
+              id="username"
+              value={formData.username}
+              name="username"
               onChange={handleChange}
+              className="form-control border-primary"
+              required
             />
-            <label htmlFor="company" className="ms-2">
-              Company
-            </label>
           </div>
-        </div>
-
-        <div className="d-flex justify-content-between">
+          <div className="mb-3">
+            <label htmlFor="about" className="form-label fw-semibold">
+              About
+            </label>
+            <input
+              type="text"
+              id="about"
+              value={formData.about}
+              name="about"
+              onChange={handleChange}
+              className="form-control border-primary"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label fw-semibold">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={formData.password}
+              name="password"
+              onChange={handleChange}
+              className="form-control border-primary"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="confirm" className="form-label fw-semibold">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirm"
+              value={formData.passwordConf}
+              name="passwordConf"
+              onChange={handleChange}
+              className="form-control border-primary"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-semibold">Account Type</label>
+            <div className="form-check">
+              <input
+                type="radio"
+                id="personal"
+                name="accountType"
+                value="personal"
+                checked={formData.accountType === 'personal'}
+                onChange={handleChange}
+                className="form-check-input"
+              />
+              <label htmlFor="personal" className="form-check-label ms-2">
+                Personal
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                id="company"
+                name="accountType"
+                value="company"
+                checked={formData.accountType === 'company'}
+                onChange={handleChange}
+                className="form-check-input"
+              />
+              <label htmlFor="company" className="form-check-label ms-2">
+                Company
+              </label>
+            </div>
+          </div>
           <button
             type="submit"
-            className="btn"
-            style={{ backgroundColor: '#800000', color: '#fff' }}
+            className="btn w-100 text-white fw-semibold"
+            style={{ backgroundColor: '#0A66C2' }}
             disabled={isFormInvalid()}
           >
             Sign Up
           </button>
-          <Link to="/" className="btn btn-secondary">
-            Cancel
-          </Link>
-        </div>
-      </form>
+          <div className="text-center mt-3">
+            <Link
+              to="/"
+              className="text-decoration-none"
+              style={{ color: '#0A66C2' }}
+            >
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
     </main>
   )
 }

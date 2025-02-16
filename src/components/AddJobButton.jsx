@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 
-const AddPostButton = () => {
+const AddJobButton = () => {
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate('/post/new')
+    navigate('/job/new')
   }
 
   return (
@@ -13,9 +13,9 @@ const AddPostButton = () => {
       className="btn w-30 text-white fw-semibold"
       style={{ backgroundColor: '#0A66C2' }}
     >
-      Create a post
+      Post a new Job
     </button>
   )
 }
 
-export default AddPostButton
+export default AddJobButton

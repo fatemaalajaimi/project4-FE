@@ -1,34 +1,32 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { addPost } from '../../services/postService'
+import { addJob } from '../../services/jobService'
 
-const AddPost = ({ posts, setPosts }) => {
-  const initialState = { content: '', image: '' }
-  const [formPost, setFormPost] = useState(initialState)
-  const [message, setMessage] = useState('')
+const AddJob = ({ jobs, setJobs }) => {
+  const initialState = {
+    role: '',
+    description: ''
+  }
+  const [formJob, setFormJob] = useState(initialState)
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const formData = new FormData()
-      formData.append('content', formPost.content)
-      formData.append('image', formPost.image)
-      const response = await addPost(formData)
-      setPosts([...posts, response])
-      setFormPost(initialState)
-      navigate('/profile')
+      const response = await addJob({
+        role: formJob.role,
+        description: formJob.description
+      })
+      setJobs([...jobs, response])
+      setFormJob(initialState)
+      navigate('/jobs')
     } catch (error) {
-      setMessage('Failed to create post. Please try again.')
+      console.error('Error adding job:', error)
     }
   }
 
   const handleChange = (event) => {
-    setFormPost({ ...formPost, [event.target.id]: event.target.value })
-  }
-
-  const handleImageChange = (event) => {
-    setFormPost({ ...formPost, image: event.target.files[0] })
+    setFormJob({ ...formJob, [event.target.id]: event.target.value })
   }
 
   return (
@@ -41,46 +39,47 @@ const AddPost = ({ posts, setPosts }) => {
         style={{ maxWidth: '400px', width: '100%', borderRadius: '10px' }}
       >
         <h2 className="text-center mb-4" style={{ color: '#0A66C2' }}>
-          Create a Post
+          New Job
         </h2>
-        {message && <p className="text-danger text-center">{message}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="content" className="form-label fw-semibold">
-              Post Content
-            </label>
-            <textarea
-              id="content"
-              className="form-control border-primary"
-              onChange={handleChange}
-              value={formPost.content}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="image" className="form-label fw-semibold">
-              Upload Image
+            <label htmlFor="role" className="form-label fw-semibold">
+              Role Name
             </label>
             <input
-              type="file"
-              id="image"
+              type="text"
+              id="role"
               className="form-control border-primary"
-              onChange={handleImageChange}
-              accept="image/*"
+              onChange={handleChange}
+              value={formJob.role}
               required
             />
           </div>
+
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label fw-semibold">
+              Description
+            </label>
+            <textarea
+              id="description"
+              className="form-control border-primary"
+              onChange={handleChange}
+              value={formJob.description}
+              required
+            />
+          </div>
+
           <button
             type="submit"
             className="btn w-100 text-white fw-semibold"
             style={{ backgroundColor: '#0A66C2' }}
           >
-            Post
+            Create Job
           </button>
           <div className="text-center mt-3">
             <button
               type="button"
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate('/')}
               className="text-decoration-none btn btn-link"
               style={{ color: '#0A66C2' }}
             >
@@ -93,4 +92,4 @@ const AddPost = ({ posts, setPosts }) => {
   )
 }
 
-export default AddPost
+export default AddJob

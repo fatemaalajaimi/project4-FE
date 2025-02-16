@@ -16,7 +16,6 @@ const Signin = ({ getUserProfile }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  //Admin Page viewing all the vendors and we will need a handle that submit both Vendors & Customers
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
@@ -30,51 +29,67 @@ const Signin = ({ getUserProfile }) => {
   }
 
   return (
-    <main className="container mt-5">
-      <h1 className="text-center mb-4">Sign In</h1>
-      {message && <p className="text-danger text-center">{message}</p>}
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">
-            Username:
-          </label>
-          <input
-            type="text"
-            autoComplete="off"
-            id="username"
-            value={formData.username}
-            name="username"
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password:
-          </label>
-          <input
-            type="password"
-            autoComplete="off"
-            id="password"
-            value={formData.password}
-            name="password"
-            onChange={handleChange}
-            className="form-control"
-          />
-        </div>
-        <div className="d-flex justify-content-between">
+    <main
+      className="container d-flex justify-content-center align-items-center"
+      style={{ height: '100vh' }}
+    >
+      <div
+        className="card shadow-lg p-4"
+        style={{ maxWidth: '400px', width: '100%', borderRadius: '10px' }}
+      >
+        <h2 className="text-center mb-4" style={{ color: '#0A66C2' }}>
+          Sign In
+        </h2>
+        {message && <p className="text-danger text-center">{message}</p>}
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label fw-semibold">
+              Username
+            </label>
+            <input
+              type="text"
+              autoComplete="off"
+              id="username"
+              value={formData.username}
+              name="username"
+              onChange={handleChange}
+              className="form-control border-primary"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label fw-semibold">
+              Password
+            </label>
+            <input
+              type="password"
+              autoComplete="off"
+              id="password"
+              value={formData.password}
+              name="password"
+              onChange={handleChange}
+              className="form-control border-primary"
+              required
+            />
+          </div>
           <button
             type="submit"
-            className="btn"
-            style={{ backgroundColor: '#800000', color: '#fff' }}
+            className="btn w-100 text-white fw-semibold"
+            style={{ backgroundColor: '#0A66C2' }}
           >
             Sign In
           </button>
-          <Link to="/" className="btn btn-secondary">
-            Cancel
-          </Link>
-        </div>
-      </form>
+          <div className="text-center mt-3">
+            <Link
+              to="/"
+              className="text-decoration-none"
+              style={{ color: '#0A66C2' }}
+            >
+              Cancel
+            </Link>
+          </div>
+        </form>
+      </div>
     </main>
   )
 }
